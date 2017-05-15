@@ -25,6 +25,33 @@ features_train, features_test, labels_train, labels_test = preprocess()
 #########################################################
 ### your code goes here ###
 
+from sklearn import svm
+t0=time()
+clf = svm.SVC(C=10000.0, kernel='rbf');
+
+#features_train = features_train[:len(features_train)/100]
+#labels_train = labels_train[:len(labels_train)/100]
+
+clf.fit(features_train, labels_train)
+print "Training time", round(time()-t0, 3), "s"
+
+t1=time()
+pred = clf.predict(features_test)
+print "Prediction time", round(time()-t1, 3), "s"
+
+from sklearn.metrics import accuracy_score
+acc = accuracy_score(pred, labels_test)
+
+print "Accuracy: ", acc
+
+x=0
+for i in range (len(pred)):
+	if pred[i] == 1:
+		print "Who is author of email " + str(i) + " :", pred[i]
+		x+=1
+		
+print x
+
 #########################################################
 
 
